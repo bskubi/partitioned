@@ -31,6 +31,7 @@ def main():
     prev = None
 
     input_stream = sys.stdin if args.input_file is None else open(args.input_file, 'r')
+    tried_chunk = False
     try:
         for line in input_stream:
             if prev is None or prev != line:
@@ -43,6 +44,10 @@ def main():
 
         if current_chunk:
             check_and_insert_batch(current_chunk, cursor, conn)
+        if not tried_chunk and len(set(current_chunk)) != len(current_chunk):
+            sys.exit(1)
+        tried_chunk = True
+
     finally:
         if args.input_file:
             input_stream.close()
