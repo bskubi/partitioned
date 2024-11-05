@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='partitioned',
-    version='0.1.0',
+    version='0.1.1',
     py_modules=['partitioned'],
     author='Benjamin Skubi',
     author_email='skubi@ohsu.edu',
@@ -16,4 +16,9 @@ setup(
         'Operating System :: OS Independent',
     ],
     python_requires='>=3.6',
+    entry_points={
+        'console_scripts': [
+            'partitioned=partitioned:main',  # Replace `main` with your function name
+        ],
+    },
 )

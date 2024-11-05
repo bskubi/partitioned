@@ -1,0 +1,10 @@
+# Ignore everything by default
+*
+
+# Allow specific files
+!partitioned.py
+!setup.py
+!README.md
+
+# Allow specific directories (optional if needed)
+!.gitignore
