@@ -1,1 +1,3 @@
 The `partitioned` package is a simple Python script to check if a sequence of lines are partitioned, such that all duplicate lines are sequential. It uses a SQLite3 in-memory database that can spill to disk to store previously seen strings.
+
+The original motive for `partitioned` was for bioinformatics, specifically to determine if a .sam/.bam file was partitioned by readID, permitting a time-consuming sort by name that is usually unnecessary. An example of how it can be used for this is `samtools view demo.bam | awk -F'\\t' '{ print \$1 }' | partitioned && echo "demo.bam is partitioned by readID" || echo "demo.bam is not partitioned by readID"`. 
