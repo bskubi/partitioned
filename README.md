@@ -25,5 +25,6 @@ Details:
 + It can also read from a file with `-i` (streams from stdin if unspecified).
 + Pragmas can be set with `--pragmas` as a space-separated list.
 + The number of lines read in at once is configurable with `--chunk-size` (default is 1 million lines).
++ Runtime heavily depends on the text being evaluated, but scales roughly linearly with the number of lines. Evaluating BAM lines like `K00321:50:ZZ2G2BBXX:4:1121:23231:1433` took approximately 4.2 seconds per million reads in one performance check.
 
 
