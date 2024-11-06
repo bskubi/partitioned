@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='partitioned',
-    version='0.1.3',
+    version='0.1.4',
     py_modules=['partitioned'],
     author='Benjamin Skubi',
     author_email='skubi@ohsu.edu',

@@ -14,18 +14,28 @@ def check_and_insert_batch(batch, cursor, conn):
     cursor.execute('INSERT INTO seen SELECT temp_batch.value FROM temp_batch')
     conn.commit()
 
+def configure_database(cursor, pragmas):
+    # Apply each pragma provided by the user
+    for pragma in pragmas:
+        cursor.execute(f"PRAGMA {pragma}")
+
 def main():
     parser = argparse.ArgumentParser(description="Check if a series of lines is partitioned (all identical lines sequential).")
     parser.add_argument('--chunk-size', type=int, default=1000000, help="Number of lines to process in each chunk (default: 1,000,000)")
+    parser.add_argument('--pragmas', type=str, nargs='*', default=[], 
+                        help="SQLite PRAGMA statements to configure the database (e.g., cache_size=-2000, threads=4)")
     parser.add_argument('input_file', type=str, nargs='?', help="Path to the input file (optional). If not provided, reads from stdin.")
     
     args = parser.parse_args()
 
-    # Connect to an SQLite database (in memory)
-    conn = sqlite3.connect(':memory:')
+    # Connect to a temporary SQLite database on disk (empty filename)
+    conn = sqlite3.connect('')
     cursor = conn.cursor()
     cursor.execute('CREATE TABLE IF NOT EXISTS seen (value TEXT PRIMARY KEY)')
     conn.commit()
+
+    # Configure database with user-specified pragmas
+    configure_database(cursor, args.pragmas)
 
     current_chunk = []
     prev = None
@@ -55,3 +65,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
